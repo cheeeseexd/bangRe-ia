@@ -59,7 +59,7 @@ export const IAFlowchartTab: React.FC<IAFlowchartTabProps> = ({ onPreviewLivePag
     'what-we-do': true,
     'industries': true,
     'work': true,
-    'how-we-work': true,
+    'plans': false,
     'about-bang': true,
     'talk-to-bang': true,
     'insights-archive': true,
@@ -956,120 +956,150 @@ export const IAFlowchartTab: React.FC<IAFlowchartTabProps> = ({ onPreviewLivePag
       ]
     },
 
-    // 4. HOW WE WORK
+    // 4. PLANS
     {
-      id: 'how-we-work',
-      label: 'How We Work',
-      fullTitle: 'How We Work (Collaboration & Engagement)',
+      id: 'plans',
+      label: 'Plans',
+      fullTitle: 'Plans',
       level: 'main',
-      purpose: 'Clarify our engagement models, agile sprint structure, and commercial options.',
+      purpose: 'Choose the right way to work with Bang.',
       contains: [
-        'Overview of 4 engagement models: Focused Project, Product Program, Ongoing Team, Venture Partnership',
-        'Stage-gate milestone structure and transparent weekly deliverables',
-        'Comprehensive FAQ covering IP assignment, confidentiality, and tooling oversight'
+        'Main Purpose: Choose the right way to work with Bang.',
+        'Primary CTA: Compare Plans',
+        'Secondary CTA: Book a Strategy Call',
+        'Compare Plans: Help visitors compare the available ways to work with Bang',
+        'Start a Project: For a focused, clearly defined product or growth need',
+        'Build a Product: For teams moving from idea through development and manufacturing preparation',
+        'Ongoing Support: For companies needing ongoing design, engineering, digital, or growth support',
+        'Venture Partnership: A selective partnership route for validated product businesses',
+        'How Plans Work: Explain how scope, collaboration, and next steps work in plain language',
+        'Plan Questions: Answer common questions about fit, timing, process, and getting started'
       ],
       parentLabel: 'Home',
       parentId: 'home',
       childLabels: [
-        'Ways to Work',
-        'Focused Project Support',
-        'Longer Product Programs',
-        'Ongoing Team Support',
+        'Compare Plans',
+        'Start a Project',
+        'Build a Product',
+        'Ongoing Support',
         'Venture Partnership',
-        'Common Questions'
+        'How Plans Work',
+        'Plan Questions'
       ],
       status: 'Ready',
-      wireframeSlug: '/how-we-work',
+      wireframeSlug: '/plans',
       children: [
         {
-          id: 'hww-ways',
-          label: 'Ways to Work',
-          fullTitle: 'Ways to Work: Overview Matrix',
+          id: 'plan-compare',
+          label: 'Compare Plans',
+          fullTitle: 'Compare Plans',
           level: 'item',
-          purpose: 'Compare all engagement models to find the ideal match for your team size and timeline.',
+          purpose: 'Help visitors compare the available ways to work with Bang.',
           contains: [
-            'Clear side-by-side comparison table of all 4 models',
-            'Estimated sprint durations and resource allocations',
-            'Dedicated project lead vs. embedded team mechanics'
+            'Side-by-side comparison of engagement models, deliverables, and commitment levels',
+            'Guidance for founders, scaleups, and enterprise R&D leaders to choose the right model',
+            'Clear transition pathways between fixed project sprints and ongoing support'
           ],
-          parentLabel: 'How We Work',
-          parentId: 'how-we-work',
-          status: 'Ready'
+          parentLabel: 'Plans',
+          parentId: 'plans',
+          status: 'Ready',
+          wireframeSlug: '/plans'
         },
         {
-          id: 'hww-focused',
-          label: 'Focused Project Support',
-          fullTitle: 'Focused Project Support (Sprints)',
+          id: 'plan-start',
+          label: 'Start a Project',
+          fullTitle: 'Start a Project',
           level: 'item',
-          purpose: 'Targeted 4 to 8-week sprints solving specific design, thermal, or tooling blockers.',
+          purpose: 'For a focused, clearly defined product or growth need.',
           contains: [
+            'Targeted 4 to 8-week sprints solving specific design, DFM, or engineering blockers',
             'Fixed-scope deliverables with guaranteed timeline milestones',
-            'Ideal for early ID concepts, DFM audits, or PCB packaging redesigns',
-            'Immediate kick-off with minimal onboarding overhead'
+            'Direct access to working engineering leads with rapid kickoff'
           ],
-          parentLabel: 'How We Work',
-          parentId: 'how-we-work',
-          status: 'Ready'
+          parentLabel: 'Plans',
+          parentId: 'plans',
+          status: 'Ready',
+          wireframeSlug: '/plans'
         },
         {
-          id: 'hww-longer',
-          label: 'Longer Product Programs',
-          fullTitle: 'Longer Product Programs (Turnkey)',
+          id: 'plan-build',
+          label: 'Build a Product',
+          fullTitle: 'Build a Product',
           level: 'item',
-          purpose: 'Comprehensive 12 to 24-week programs driving from PRD to production handover.',
+          purpose: 'For teams moving from idea through development and manufacturing preparation.',
           contains: [
-            'End-to-end management across Industrial Design, Mechanical, Electrical, and Tooling',
-            'Formal Phase-Gate reviews (Concept, Alpha, Beta, Pilot Tooling)',
-            'On-site factory tool qualification and First Article Inspection'
+            'Turnkey 12 to 24-week development programs spanning PRD, CAD, and functional prototypes',
+            'Integrated industrial design, mechanical engineering, electronics, and firmware',
+            'DFM audits, tooling qualification, and pilot production handover'
           ],
-          parentLabel: 'How We Work',
-          parentId: 'how-we-work',
-          status: 'Ready'
+          parentLabel: 'Plans',
+          parentId: 'plans',
+          status: 'Ready',
+          wireframeSlug: '/plans'
         },
         {
-          id: 'hww-ongoing',
-          label: 'Ongoing Team Support',
-          fullTitle: 'Ongoing Team Support (Retainer)',
+          id: 'plan-ongoing',
+          label: 'Ongoing Support',
+          fullTitle: 'Ongoing Support',
           level: 'item',
-          purpose: 'Dedicated embedded engineering and design pod acting as your internal hardware division.',
+          purpose: 'For companies needing ongoing design, engineering, digital, or growth support.',
           contains: [
-            'Continuous roadmap execution and sustaining engineering',
-            'Rapid turnaround on line extensions, accessories, and packaging updates',
-            'Direct Slack and weekly sync integration with client leadership'
+            'Embedded design and engineering pod acting as your continuous hardware and digital department',
+            'Sustaining engineering, line extensions, packaging updates, and digital conversion optimization',
+            'Flexible sprint allocations with direct collaboration channels'
           ],
-          parentLabel: 'How We Work',
-          parentId: 'how-we-work',
-          status: 'Ready'
+          parentLabel: 'Plans',
+          parentId: 'plans',
+          status: 'Ready',
+          wireframeSlug: '/plans'
         },
         {
-          id: 'hww-venture',
+          id: 'plan-venture',
           label: 'Venture Partnership',
-          fullTitle: 'Venture Partnership & Strategic Co-Creation',
+          fullTitle: 'Venture Partnership',
           level: 'item',
-          purpose: 'Selective shared-risk co-creation for high-conviction hardware startups and spinouts.',
+          purpose: 'A selective partnership route for validated product businesses. Do not call it “2+2” on the canvas or navbar.',
           contains: [
-            'Aligned equity or royalty-supported commercial co-development models',
-            'Access to Bang prototype lab, supplier tooling discounts, and investor network',
-            'Commercial mechanics detailed exclusively during partner qualification'
+            'Selective co-creation and shared-risk partnership for high-conviction product ventures',
+            'Access to Bang rapid prototyping lab, tier-1 supplier tooling discounts, and advisory network',
+            'Commercial mechanics and aligned terms available in partner discussion after qualification'
           ],
-          parentLabel: 'How We Work',
-          parentId: 'how-we-work',
-          status: 'Ready'
+          parentLabel: 'Plans',
+          parentId: 'plans',
+          status: 'Ready',
+          wireframeSlug: '/plans'
         },
         {
-          id: 'hww-faqs',
-          label: 'Common Questions',
-          fullTitle: 'How We Work: Common Questions',
+          id: 'plan-how',
+          label: 'How Plans Work',
+          fullTitle: 'How Plans Work',
           level: 'item',
-          purpose: 'Answer practical questions regarding payment milestones, NDAs, and changes of scope.',
+          purpose: 'Explain how scope, collaboration, and next steps work in plain language.',
           contains: [
-            'Full client ownership of all CAD files, schematics, and IP',
-            'Weekly sprint reviews and transparent change request policies',
-            'Tooling supplier warranty and manufacturing liaison guidelines'
+            'Transparent agile sprint workflow with weekly milestone demonstrations and physical reviews',
+            'Direct collaboration with senior engineers and industrial designers without agency overhead',
+            'Clear stage-gate approvals and manufacturing handover documentation'
           ],
-          parentLabel: 'How We Work',
-          parentId: 'how-we-work',
-          status: 'Ready'
+          parentLabel: 'Plans',
+          parentId: 'plans',
+          status: 'Ready',
+          wireframeSlug: '/plans'
+        },
+        {
+          id: 'plan-questions',
+          label: 'Plan Questions',
+          fullTitle: 'Plan Questions',
+          level: 'item',
+          purpose: 'Answer common questions about fit, timing, process, and getting started.',
+          contains: [
+            '100% client IP assignment and comprehensive non-disclosure assurance',
+            'Typical project timelines, lead times, and resource allocations',
+            'Flexible onboarding, scope adjustments, and budget planning'
+          ],
+          parentLabel: 'Plans',
+          parentId: 'plans',
+          status: 'Ready',
+          wireframeSlug: '/plans'
         }
       ]
     },
@@ -1415,7 +1445,7 @@ export const IAFlowchartTab: React.FC<IAFlowchartTabProps> = ({ onPreviewLivePag
       'What We Do',
       'Industries',
       'Work',
-      'How We Work',
+      'Plans',
       'About Bang',
       'Talk to Bang',
       'Insights Archive'
@@ -1523,7 +1553,7 @@ export const IAFlowchartTab: React.FC<IAFlowchartTabProps> = ({ onPreviewLivePag
       'what-we-do': true,
       'industries': true,
       'work': true,
-      'how-we-work': true,
+      'plans': true,
       'about-bang': true,
       'talk-to-bang': true,
       'insights-archive': true,
@@ -1548,7 +1578,7 @@ export const IAFlowchartTab: React.FC<IAFlowchartTabProps> = ({ onPreviewLivePag
       'what-we-do': false,
       'industries': false,
       'work': false,
-      'how-we-work': false,
+      'plans': false,
       'about-bang': false,
       'talk-to-bang': false,
       'insights-archive': false,
@@ -1790,22 +1820,32 @@ export const IAFlowchartTab: React.FC<IAFlowchartTabProps> = ({ onPreviewLivePag
                       handleSelectNode(branch, e);
                       toggleNodeExpansion(branch.id, e);
                     }}
-                    className={`w-full bg-white border cursor-pointer transition-all duration-150 shadow-xs flex items-center justify-between px-3.5 py-3 ${
+                    className={`w-full bg-white border cursor-pointer transition-all duration-150 shadow-xs flex items-start justify-between px-3.5 py-3 ${
                       selectedNode?.id === branch.id
                         ? 'border-black ring-2 ring-black bg-[#FAFAFA]'
                         : 'border-[#111111] hover:border-black hover:bg-[#FAFAFA]'
                     }`}
                   >
-                    <div className="flex items-center space-x-2">
+                    <div className="flex flex-col text-left space-y-0.5">
                       <span className="text-[14px] font-semibold text-black tracking-tight">
                         {branch.label}
                       </span>
+                      {branch.id === 'plans' && (
+                        <>
+                          <p className="text-[12px] font-normal text-[#525252] leading-snug">
+                            Choose the right way to work with Bang
+                          </p>
+                          <span className="text-[11px] font-medium text-[#737373]">
+                            7 plan pages
+                          </span>
+                        </>
+                      )}
                     </div>
 
                     {hasChildren && (
                       <button
                         onClick={(e) => toggleNodeExpansion(branch.id, e)}
-                        className="text-[#64748B] hover:text-black p-0.5 hover:bg-[#F1F5F9] rounded"
+                        className="text-[#64748B] hover:text-black p-0.5 hover:bg-[#F1F5F9] rounded ml-1 mt-0.5"
                       >
                         {isExpanded ? (
                           <ChevronDown className="w-3.5 h-3.5 text-black" />

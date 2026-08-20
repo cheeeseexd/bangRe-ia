@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TopNav, AppTabType } from './components/TopNav';
 import { IAFlowchartTab } from './components/IAFlowchartTab';
 import { MainPagesTableTab } from './components/MainPagesTableTab';
@@ -13,24 +13,100 @@ import { SourcesTab } from './components/SourcesTab';
 import { LiveWebsiteView } from './components/LiveWebsiteView';
 import { AIConciergeModal } from './components/AIConciergeModal';
 import { JsonSpecModal } from './components/JsonSpecModal';
-import { BANG_SPEC } from './data/bangSpecData';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<AppTabType>('flowchart');
-  const [livePageSlug, setLivePageSlug] = useState<string>('/');
+  // Parse initial state from window.location
+  const getInitialState = () => {
+    if (typeof window === 'undefined') {
+      return { tab: 'live' as AppTabType, slug: '/' };
+    }
+    const path = window.location.pathname.toLowerCase();
+    const searchParams = new URLSearchParams(window.location.search);
+    const tabParam = searchParams.get('tab') as AppTabType | null;
+
+    if (tabParam && ['flowchart', 'main_pages', 'subpages', 'redirects', 'sources', 'live'].includes(tabParam)) {
+      return { tab: tabParam, slug: path || '/' };
+    }
+
+    if (path === '/ia-flowchart' || path === '/flowchart' || path === '/blueprint') {
+      return { tab: 'flowchart' as AppTabType, slug: '/' };
+    }
+    if (path === '/main-pages') {
+      return { tab: 'main_pages' as AppTabType, slug: '/' };
+    }
+    if (path === '/subpages') {
+      return { tab: 'subpages' as AppTabType, slug: '/' };
+    }
+    if (path === '/legacy-redirects' || path === '/redirects') {
+      return { tab: 'redirects' as AppTabType, slug: '/' };
+    }
+    if (path === '/sources') {
+      return { tab: 'sources' as AppTabType, slug: '/' };
+    }
+
+    // Default to Live Website Wireframe
+    return { tab: 'live' as AppTabType, slug: path && path !== '' ? path : '/' };
+  };
+
+  const initialState = getInitialState();
+  const [activeTab, setActiveTab] = useState<AppTabType>(initialState.tab);
+  const [livePageSlug, setLivePageSlug] = useState<string>(initialState.slug);
   const [isAIModalOpen, setIsAIModalOpen] = useState<boolean>(false);
   const [aiInitialPrompt, setAiInitialPrompt] = useState<string>('');
   const [isJsonModalOpen, setIsJsonModalOpen] = useState<boolean>(false);
 
-  // Transition to live page preview
+  // Sync state with browser URL
+  useEffect(() => {
+    const handlePopState = () => {
+      const current = getInitialState();
+      setActiveTab(current.tab);
+      setLivePageSlug(current.slug);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  // Update tab and handle history
+  const handleSelectTab = (tab: AppTabType) => {
+    if (tab === 'ai_concierge') {
+      setIsAIModalOpen(true);
+      return;
+    }
+    setActiveTab(tab);
+    if (tab === 'live') {
+      if (window.location.pathname !== livePageSlug) {
+        window.history.pushState(null, '', livePageSlug);
+      }
+    } else {
+      const tabPaths: Record<string, string> = {
+        flowchart: '/ia-flowchart',
+        main_pages: '/main-pages',
+        subpages: '/subpages',
+        redirects: '/redirects',
+        sources: '/sources',
+      };
+      if (tabPaths[tab] && window.location.pathname !== tabPaths[tab]) {
+        window.history.pushState(null, '', tabPaths[tab]);
+      }
+    }
+  };
+
+  // Transition to live page preview from IA tabs
   const handlePreviewLivePage = (slug: string) => {
     setLivePageSlug(slug);
     setActiveTab('live');
+    if (window.location.pathname !== slug) {
+      window.history.pushState(null, '', slug);
+    }
   };
 
   // Transition from live page back to flowchart
   const handleOpenNodeInBlueprint = (slug: string) => {
     setActiveTab('flowchart');
+    if (window.location.pathname !== '/ia-flowchart') {
+      window.history.pushState(null, '', '/ia-flowchart');
+    }
   };
 
   const handleOpenAIConcierge = (prompt?: string) => {
@@ -43,13 +119,7 @@ export default function App() {
       {/* Top Universal Control Header */}
       <TopNav
         currentTab={activeTab}
-        onSelectTab={(tab) => {
-          if (tab === 'ai_concierge') {
-            setIsAIModalOpen(true);
-          } else {
-            setActiveTab(tab);
-          }
-        }}
+        onSelectTab={handleSelectTab}
         onOpenJsonSpec={() => setIsJsonModalOpen(true)}
       />
 

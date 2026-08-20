@@ -41,6 +41,13 @@ export const LiveWebsiteView: React.FC<LiveWebsiteViewProps> = ({
   // Navigation & View States
   const [currentRoute, setCurrentRoute] = useState<string>(initialSlug);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+
+  // Sync with initialSlug prop if it changes
+  React.useEffect(() => {
+    if (initialSlug && initialSlug !== currentRoute) {
+      setCurrentRoute(initialSlug);
+    }
+  }, [initialSlug]);
   
   // Interactive Path Selector
   const [selectedPathIndex, setSelectedPathIndex] = useState<number>(0);
@@ -123,6 +130,9 @@ export const LiveWebsiteView: React.FC<LiveWebsiteViewProps> = ({
   const navigateTo = (slug: string) => {
     setCurrentRoute(slug);
     setActiveDropdown(null);
+    if (typeof window !== 'undefined' && window.location.pathname !== slug) {
+      window.history.pushState(null, '', slug);
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -253,14 +263,14 @@ export const LiveWebsiteView: React.FC<LiveWebsiteViewProps> = ({
             work
           </button>
 
-          {/* Plans & Pricing Link */}
+          {/* Plans Link */}
           <button
             onClick={() => navigateTo('/plans')}
             className={`transition-colors text-xs ${
               currentRoute === '/plans' || currentRoute === '/pricing' ? 'text-black font-medium underline' : 'text-black hover:text-neutral-500'
             }`}
           >
-            plans & pricing
+            plans
           </button>
 
           {/* About Link */}
@@ -270,15 +280,7 @@ export const LiveWebsiteView: React.FC<LiveWebsiteViewProps> = ({
               currentRoute === '/about' ? 'text-black font-medium underline' : 'text-black hover:text-neutral-500'
             }`}
           >
-            about
-          </button>
-
-          {/* Preserved Blog & Archive Link */}
-          <button
-            onClick={() => navigateTo('/insights')}
-            className="text-[#737373] hover:text-black transition-colors text-xs"
-          >
-            insights
+            about bang
           </button>
         </nav>
 
@@ -294,7 +296,7 @@ export const LiveWebsiteView: React.FC<LiveWebsiteViewProps> = ({
 
           <button
             onClick={() => navigateTo('/start-for-free')}
-            className="px-4 py-2 bg-black text-white hover:bg-neutral-800 text-xs font-medium tracking-tight transition-colors flex items-center space-x-1.5"
+            className="px-4 py-2 bg-[#db2229] hover:bg-black text-white text-xs font-semibold tracking-tight transition-colors flex items-center space-x-1.5"
           >
             <span>book a strategy call</span>
             <ArrowRight className="w-3.5 h-3.5" />
@@ -348,7 +350,7 @@ export const LiveWebsiteView: React.FC<LiveWebsiteViewProps> = ({
               <div className="pt-4 flex flex-wrap items-center gap-4">
                 <button
                   onClick={() => navigateTo('/start-for-free')}
-                  className="px-6 py-3 bg-black text-white hover:bg-neutral-800 text-xs font-medium tracking-tight transition-colors flex items-center space-x-2"
+                  className="px-6 py-3.5 bg-[#db2229] hover:bg-black text-white text-xs font-semibold tracking-tight transition-colors flex items-center space-x-2"
                 >
                   <span>book a strategy call</span>
                   <ArrowRight className="w-4 h-4" />
@@ -359,14 +361,14 @@ export const LiveWebsiteView: React.FC<LiveWebsiteViewProps> = ({
                     const el = document.getElementById('section-work');
                     el?.scrollIntoView({ behavior: 'smooth' });
                   }}
-                  className="px-5 py-3 bg-white hover:bg-[#F9F9F9] border border-[#E5E5E5] hover:border-black text-xs font-medium transition-colors"
+                  className="px-6 py-3.5 bg-white hover:bg-black hover:text-white border border-black text-xs font-medium text-black transition-colors"
                 >
                   see relevant work
                 </button>
 
                 <button
                   onClick={() => onOpenAIConcierge('What are the differences between the two primary offers?')}
-                  className="px-4 py-3 bg-[#FAFAFA] hover:bg-[#F0F0F0] border border-[#E5E5E5] text-xs text-[#525252] flex items-center space-x-1.5"
+                  className="px-4 py-3.5 bg-[#FAFAFA] hover:bg-[#F0F0F0] border border-[#E5E5E5] text-xs text-[#525252] flex items-center space-x-1.5"
                 >
                   <Sparkles className="w-3.5 h-3.5 text-black" />
                   <span>ask ai concierge</span>
@@ -1396,105 +1398,347 @@ export const LiveWebsiteView: React.FC<LiveWebsiteViewProps> = ({
         </main>
       )}
 
-      {/* CONDITIONAL SUB-PAGE: PRODUCT DESIGN TO MANUFACTURING */}
-      {currentRoute === '/product-design-to-manufacturing' && (
-        <main className="flex-1 px-6 lg:px-12 py-16 max-w-7xl mx-auto space-y-12">
-          <div className="space-y-4 max-w-3xl">
-            <div className="text-xs text-[#737373]">
-              // primary offer 01 • hardware lifecycle
+      {/* CONDITIONAL SUB-PAGE: WHAT WE DO (FULL WIREFRAME SPECIFICATION) */}
+      {(currentRoute === '/what-we-do' || 
+        currentRoute === '/product-design-to-manufacturing' || 
+        currentRoute === '/digital-growth' || 
+        currentRoute.startsWith('/product/') || 
+        currentRoute.startsWith('/digital/') ||
+        currentRoute === '/services') && (
+        <main className="flex-1 px-6 lg:px-12 py-16 max-w-7xl mx-auto space-y-20">
+          {/* 1. OFFER OVERVIEW */}
+          <section className="space-y-6 max-w-4xl">
+            <div className="flex items-center space-x-2 text-xs text-[#737373]">
+              <button onClick={() => navigateTo('/')} className="hover:text-black">home</button>
+              <span>/</span>
+              <span className="text-black font-medium">what we do</span>
             </div>
-            <h1 className="text-3xl sm:text-5xl font-medium tracking-tight text-black lowercase">
-              Product Design to Manufacturing
-            </h1>
-            <p className="text-base text-[#525252] leading-relaxed">
-              The shortest path from product idea to manufacturable, launch-ready product, with no compromise. We engineer, design, prototype, and oversee factory mass production.
-            </p>
-            <div className="pt-2 flex items-center space-x-3">
+            
+            <div className="space-y-3">
+              <div className="text-xs text-[#737373] tracking-normal font-mono">
+                // 01. offer overview • full-spectrum product realization
+              </div>
+              <h1 className="text-3xl sm:text-5xl font-medium tracking-tight text-black lowercase leading-tight">
+                Two integrated disciplines. Zero handoff friction.
+              </h1>
+              <p className="text-base sm:text-lg text-[#525252] leading-relaxed max-w-3xl">
+                Bang Design bridges physical hardware engineering and digital product experience. From the first CAD sketch to factory tooling, and from 3D WebGL configurators to AI-enabled customer acquisition.
+              </p>
+            </div>
+
+            <div className="pt-2 flex flex-wrap items-center gap-3">
               <button
                 onClick={() => navigateTo('/start-for-free')}
-                className="px-5 py-2.5 bg-black text-white hover:bg-neutral-800 text-xs font-medium flex items-center space-x-1.5"
+                className="px-6 py-3 bg-[#db2229] hover:bg-black text-white text-xs font-semibold tracking-tight transition-colors flex items-center space-x-2"
               >
-                <span>discuss a product</span>
+                <span>book a strategy call</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
               <button
-                onClick={() => onOpenAIConcierge('What DFM specifications does Bang provide for medical injection molding?')}
-                className="px-4 py-2.5 bg-[#FAFAFA] border border-[#E5E5E5] text-xs text-[#525252]"
+                onClick={() => onOpenAIConcierge('Compare Bang’s Product Design to Manufacturing offer vs Digital Growth offer')}
+                className="px-5 py-3 bg-[#FAFAFA] border border-[#E5E5E5] text-xs text-[#222222] hover:border-black transition-colors flex items-center space-x-1.5"
               >
-                ask ai about dfm specs
+                <Sparkles className="w-3.5 h-3.5 text-[#db2229]" />
+                <span>compare offers with ai</span>
               </button>
             </div>
-          </div>
+          </section>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 pt-6 border-t border-[#E5E5E5]">
-            <div className="p-5 border border-[#E5E5E5] bg-[#FAFAFA] space-y-2">
-              <div className="text-xs text-[#737373]">01. INDUSTRIAL DESIGN</div>
-              <div className="font-semibold text-xs text-black">Form, CMF & Ergonomics</div>
-              <p className="text-xs text-[#525252]">Human factors user testing, Class-A surfacing, and industrial styling tailored to regulatory requirements.</p>
+          {/* 2. TWO CORE OFFER CARDS */}
+          <section className="space-y-6">
+            <div className="flex items-center justify-between border-b border-black pb-3">
+              <h2 className="text-xl font-medium text-black lowercase">
+                Our Primary Core Offers
+              </h2>
+              <span className="text-xs text-[#737373] font-mono">
+                [ 02. core offers ]
+              </span>
             </div>
-            <div className="p-5 border border-[#E5E5E5] bg-[#FAFAFA] space-y-2">
-              <div className="text-xs text-[#737373]">02. ENGINEERING</div>
-              <div className="font-semibold text-xs text-black">Mechanical CAD & FEA</div>
-              <p className="text-xs text-[#525252]">Structural stress analysis, thermal CFD management, electromechanical packaging, and tolerance stack-up audits.</p>
-            </div>
-            <div className="p-5 border border-[#E5E5E5] bg-[#FAFAFA] space-y-2">
-              <div className="text-xs text-[#737373]">03. DFM & TOOLING</div>
-              <div className="font-semibold text-xs text-black">Hardened Tooling Specs</div>
-              <p className="text-xs text-[#525252]">Draft angle optimization, mold flow analysis, tool steel selection, and BOM unit cost reduction.</p>
-            </div>
-            <div className="p-5 border border-[#E5E5E5] bg-[#FAFAFA] space-y-2">
-              <div className="text-xs text-[#737373]">04. FACTORY SCALE</div>
-              <div className="font-semibold text-xs text-black">Quality Control & FAI</div>
-              <p className="text-xs text-[#525252]">Contract manufacturer audits, first article inspection (FAI), and pilot run supervision.</p>
-            </div>
-          </div>
-        </main>
-      )}
 
-      {/* CONDITIONAL SUB-PAGE: DIGITAL GROWTH */}
-      {currentRoute === '/digital-growth' && (
-        <main className="flex-1 px-6 lg:px-12 py-16 max-w-7xl mx-auto space-y-12">
-          <div className="space-y-4 max-w-3xl">
-            <div className="text-xs text-[#737373]">
-              // primary offer 02 • digital experience & systems
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              {/* Offer Card 01: Product Design to Manufacturing */}
+              <div className={`p-8 border flex flex-col justify-between space-y-8 transition-colors ${
+                currentRoute === '/product-design-to-manufacturing' || currentRoute.startsWith('/product/')
+                  ? 'border-black bg-white shadow-none ring-1 ring-black'
+                  : 'border-[#E5E5E5] bg-white hover:border-black'
+              }`}>
+                <div className="space-y-6">
+                  <div className="flex justify-between items-start">
+                    <span className="text-xs font-mono text-[#737373]">
+                      OFFER 01 // PHYSICAL & HARDWARE
+                    </span>
+                    <span className="text-xs px-2 py-0.5 bg-[#FAFAFA] border border-[#E5E5E5] text-[#222222]">
+                      30+ Years Proven
+                    </span>
+                  </div>
+
+                  <div className="space-y-2">
+                    <h3 className="text-2xl font-semibold text-black lowercase">
+                      Product Design to Manufacturing
+                    </h3>
+                    <p className="text-sm font-medium text-[#db2229]">
+                      From product idea to something ready to build.
+                    </p>
+                    <p className="text-xs text-[#525252] leading-relaxed pt-2">
+                      The shortest, zero-compromise path from concept sketch to high-yield factory mass production. We design Class-A industrial forms, engineer mechanical CAD, conduct FEA/CFD stress modeling, engineer injection tooling, and manage factory quality sign-off.
+                    </p>
+                  </div>
+
+                  <div className="space-y-3 pt-4 border-t border-[#E5E5E5]">
+                    <div className="text-xs font-semibold text-black">Core Capabilities:</div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#525252]">
+                      <div className="flex items-start space-x-2">
+                        <span className="text-black font-semibold">•</span>
+                        <span>Industrial Design & CMF</span>
+                      </div>
+                      <div className="flex items-start space-x-2">
+                        <span className="text-black font-semibold">•</span>
+                        <span>SolidWorks Mechanical CAD</span>
+                      </div>
+                      <div className="flex items-start space-x-2">
+                        <span className="text-black font-semibold">•</span>
+                        <span>Structural FEA & Thermal CFD</span>
+                      </div>
+                      <div className="flex items-start space-x-2">
+                        <span className="text-black font-semibold">•</span>
+                        <span>ISO 13485 Medical DFM</span>
+                      </div>
+                      <div className="flex items-start space-x-2">
+                        <span className="text-black font-semibold">•</span>
+                        <span>Hardened Injection Tooling</span>
+                      </div>
+                      <div className="flex items-start space-x-2">
+                        <span className="text-black font-semibold">•</span>
+                        <span>Factory FAI Quality Audits</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-6 border-t border-[#E5E5E5] flex items-center justify-between">
+                  <button
+                    onClick={() => navigateTo('/start-for-free')}
+                    className="px-5 py-2.5 bg-black text-white hover:bg-[#db2229] text-xs font-medium transition-colors flex items-center space-x-2"
+                  >
+                    <span>Discuss a product</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                  <span className="text-xs text-[#737373]">
+                    Turnkey or Sprint
+                  </span>
+                </div>
+              </div>
+
+              {/* Offer Card 02: Digital Growth */}
+              <div className={`p-8 border flex flex-col justify-between space-y-8 transition-colors ${
+                currentRoute === '/digital-growth' || currentRoute.startsWith('/digital/')
+                  ? 'border-black bg-white shadow-none ring-1 ring-black'
+                  : 'border-[#E5E5E5] bg-white hover:border-black'
+              }`}>
+                <div className="space-y-6">
+                  <div className="flex justify-between items-start">
+                    <span className="text-xs font-mono text-[#737373]">
+                      OFFER 02 // DIGITAL & SYSTEMS
+                    </span>
+                    <span className="text-xs px-2 py-0.5 bg-[#FAFAFA] border border-[#E5E5E5] text-[#222222]">
+                      AI-Integrated
+                    </span>
+                  </div>
+
+                  <div className="space-y-2">
+                    <h3 className="text-2xl font-semibold text-black lowercase">
+                      Digital Growth
+                    </h3>
+                    <p className="text-sm font-medium text-[#db2229]">
+                      Make your product easier to understand, choose, and grow.
+                    </p>
+                    <p className="text-xs text-[#525252] leading-relaxed pt-2">
+                      Modern hardware must win digitally before physical delivery. We build photorealistic 3D product visualizers, interactive WebGL configurators, high-converting product platforms, and autonomous AI-driven customer qualification engines.
+                    </p>
+                  </div>
+
+                  <div className="space-y-3 pt-4 border-t border-[#E5E5E5]">
+                    <div className="text-xs font-semibold text-black">Core Capabilities:</div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#525252]">
+                      <div className="flex items-start space-x-2">
+                        <span className="text-black font-semibold">•</span>
+                        <span>3D Exploded Visualizers</span>
+                      </div>
+                      <div className="flex items-start space-x-2">
+                        <span className="text-black font-semibold">•</span>
+                        <span>Interactive WebGL Product Demos</span>
+                      </div>
+                      <div className="flex items-start space-x-2">
+                        <span className="text-black font-semibold">•</span>
+                        <span>Conversion Web Platforms</span>
+                      </div>
+                      <div className="flex items-start space-x-2">
+                        <span className="text-black font-semibold">•</span>
+                        <span>AI Lead Qualification Concierges</span>
+                      </div>
+                      <div className="flex items-start space-x-2">
+                        <span className="text-black font-semibold">•</span>
+                        <span>Multi-Channel Outbound Systems</span>
+                      </div>
+                      <div className="flex items-start space-x-2">
+                        <span className="text-black font-semibold">•</span>
+                        <span>Technical Buyer Positioning</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-6 border-t border-[#E5E5E5] flex items-center justify-between">
+                  <button
+                    onClick={() => navigateTo('/start-for-free')}
+                    className="px-5 py-2.5 bg-black text-white hover:bg-[#db2229] text-xs font-medium transition-colors flex items-center space-x-2"
+                  >
+                    <span>Discuss growth</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </button>
+                  <span className="text-xs text-[#737373]">
+                    Monthly or Project
+                  </span>
+                </div>
+              </div>
             </div>
-            <h1 className="text-3xl sm:text-5xl font-medium tracking-tight text-black lowercase">
-              Digital Growth
-            </h1>
-            <p className="text-base text-[#525252] leading-relaxed">
-              Human creative UX and AI-enabled growth systems that make products easier to understand, choose, and grow.
-            </p>
-            <div className="pt-2 flex items-center space-x-3">
+          </section>
+
+          {/* 3. CAPABILITIES BY NEED */}
+          <section className="space-y-6">
+            <div className="flex items-center justify-between border-b border-black pb-3">
+              <h2 className="text-xl font-medium text-black lowercase">
+                Capabilities Organized by Stage & Need
+              </h2>
+              <span className="text-xs text-[#737373] font-mono">
+                [ 03. capabilities ]
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="p-6 border border-[#E5E5E5] bg-[#FAFAFA] space-y-3">
+                <div className="text-xs font-mono text-[#737373]">STAGE 01</div>
+                <h3 className="font-semibold text-sm text-black">We Have a Product Idea</h3>
+                <p className="text-xs text-[#525252] leading-relaxed">
+                  Turn napkin sketches, rough patents, or prototype electronics into verified 3D CAD, industrial styling, and a deterministic production roadmap.
+                </p>
+                <div className="pt-2 text-[11px] text-[#222222] font-mono">
+                  → Industrial Design, CMF, Ergonomics
+                </div>
+              </div>
+
+              <div className="p-6 border border-[#E5E5E5] bg-[#FAFAFA] space-y-3">
+                <div className="text-xs font-mono text-[#737373]">STAGE 02</div>
+                <h3 className="font-semibold text-sm text-black">Redesign & Improve</h3>
+                <p className="text-xs text-[#525252] leading-relaxed">
+                  Slash bill of materials (BOM) unit cost, eliminate assembly bottlenecks, upgrade user touchpoints, and modernize industrial enclosure aesthetics.
+                </p>
+                <div className="pt-2 text-[11px] text-[#222222] font-mono">
+                  → BOM Optimization, DFM, Assembly
+                </div>
+              </div>
+
+              <div className="p-6 border border-[#E5E5E5] bg-[#FAFAFA] space-y-3">
+                <div className="text-xs font-mono text-[#737373]">STAGE 03</div>
+                <h3 className="font-semibold text-sm text-black">Engineering & Tooling</h3>
+                <p className="text-xs text-[#525252] leading-relaxed">
+                  Rigorous finite element analysis (FEA), thermal CFD dissipation, mold flow simulations, hardened injection tooling, and ISO 13485 verification.
+                </p>
+                <div className="pt-2 text-[11px] text-[#222222] font-mono">
+                  → FEA, CFD, Moldflow, FAI
+                </div>
+              </div>
+
+              <div className="p-6 border border-[#E5E5E5] bg-[#FAFAFA] space-y-3">
+                <div className="text-xs font-mono text-[#737373]">STAGE 04</div>
+                <h3 className="font-semibold text-sm text-black">Launch, Market & Grow</h3>
+                <p className="text-xs text-[#525252] leading-relaxed">
+                  High-impact 3D visualizers, high-converting product platforms, interactive 3D configurators, and autonomous AI-driven customer acquisition.
+                </p>
+                <div className="pt-2 text-[11px] text-[#222222] font-mono">
+                  → 3D Renders, Web Platforms, AI
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* 4. RELEVANT WORK */}
+          <section className="space-y-6">
+            <div className="flex items-center justify-between border-b border-black pb-3">
+              <h2 className="text-xl font-medium text-black lowercase">
+                Relevant Engineering & Design Work
+              </h2>
+              <button 
+                onClick={() => navigateTo('/work')}
+                className="text-xs text-black hover:underline flex items-center space-x-1"
+              >
+                <span>view all case studies</span>
+                <ArrowRight className="w-3 h-3" />
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {BANG_SPEC.caseStudies.slice(0, 3).map((cs) => (
+                <div
+                  key={cs.id}
+                  onClick={() => setActiveCaseStudyModal(cs)}
+                  className="p-6 border border-[#E5E5E5] bg-white hover:border-black transition-colors cursor-pointer space-y-4 flex flex-col justify-between"
+                >
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center text-[10px] text-[#737373]">
+                      <span>{cs.category.toLowerCase()}</span>
+                      <span>{cs.clientContext.toLowerCase()}</span>
+                    </div>
+                    <h3 className="font-semibold text-base text-black lowercase">{cs.title}</h3>
+                    <p className="text-xs text-[#525252] leading-relaxed line-clamp-3">
+                      {cs.challenge}
+                    </p>
+                  </div>
+
+                  <div className="space-y-3 pt-3 border-t border-[#E5E5E5]">
+                    <div className="p-3 bg-[#FAFAFA] border border-[#E5E5E5] text-[11px] text-[#222222]">
+                      {cs.validatedOutcome}
+                    </div>
+                    <div className="flex justify-between items-center text-xs font-semibold text-black">
+                      <span>read engineering study</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* 5. PROJECT CTA */}
+          <section className="p-8 sm:p-12 bg-black text-white space-y-6">
+            <div className="max-w-2xl space-y-3">
+              <div className="text-xs text-neutral-400 font-mono">
+                // 05. project cta • start your technical discussion
+              </div>
+              <h2 className="text-2xl sm:text-4xl font-medium tracking-tight">
+                Ready to discuss your product architecture?
+              </h2>
+              <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed">
+                Book a direct technical strategy consultation with our senior engineering leads. Protected under mutual NDA with an actionable 24-hour turnaround plan.
+              </p>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-4 pt-2">
               <button
                 onClick={() => navigateTo('/start-for-free')}
-                className="px-5 py-2.5 bg-black text-white hover:bg-neutral-800 text-xs font-medium flex items-center space-x-1.5"
+                className="px-6 py-3.5 bg-[#db2229] hover:bg-white hover:text-black text-white text-xs font-semibold tracking-tight transition-colors flex items-center space-x-2"
               >
-                <span>discuss growth</span>
+                <span>book a strategy call</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </button>
+              <button
+                onClick={() => navigateTo('/plans')}
+                className="px-6 py-3.5 bg-transparent border border-neutral-700 hover:border-white text-white text-xs font-medium transition-colors"
+              >
+                compare engagement plans
+              </button>
             </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-[#E5E5E5]">
-            <div className="p-6 border border-[#E5E5E5] bg-white space-y-3">
-              <div className="font-medium text-sm text-black">01. 3D Product Storytelling</div>
-              <p className="text-xs text-[#525252] leading-relaxed">
-                Photorealistic exploded views, interactive WebGL configurators, and animation demonstrating internal engineering without expensive studio shoots.
-              </p>
-            </div>
-            <div className="p-6 border border-[#E5E5E5] bg-white space-y-3">
-              <div className="font-medium text-sm text-black">02. Conversion Web Platforms</div>
-              <p className="text-xs text-[#525252] leading-relaxed">
-                High-performance web architecture built in Elementor Pro or headless Next.js, optimized for technical buyer conversion and self-qualification.
-              </p>
-            </div>
-            <div className="p-6 border border-[#E5E5E5] bg-white space-y-3">
-              <div className="font-medium text-sm text-black">03. AI-Driven Growth Systems</div>
-              <p className="text-xs text-[#525252] leading-relaxed">
-                Automated qualification concierges, intelligent outbound campaigns, and multi-channel content generation workflows.
-              </p>
-            </div>
-          </div>
+          </section>
         </main>
       )}
 
@@ -1615,7 +1859,7 @@ export const LiveWebsiteView: React.FC<LiveWebsiteViewProps> = ({
       })()}
 
       {/* CONDITIONAL SUB-PAGE: DEDICATED BOOK A STRATEGY CALL PORTAL */}
-      {(currentRoute === '/start-for-free' || currentRoute === '/book' || currentRoute === '/strategy-call' || currentRoute === '/book-a-strategy-call' || currentRoute === '/brief') && (
+      {(currentRoute === '/start-for-free' || currentRoute === '/talk-to-bang' || currentRoute === '/contact' || currentRoute === '/book' || currentRoute === '/strategy-call' || currentRoute === '/book-a-strategy-call' || currentRoute === '/brief') && (
         <main className="flex-1 px-6 lg:px-12 py-16 max-w-7xl mx-auto space-y-16">
           {/* Breadcrumb & Hero */}
           <div className="space-y-4 max-w-3xl">
@@ -2180,18 +2424,38 @@ export const LiveWebsiteView: React.FC<LiveWebsiteViewProps> = ({
       {(currentRoute === '/plans' || currentRoute === '/pricing') && (
         <main className="flex-1 px-6 lg:px-12 py-16 max-w-7xl mx-auto space-y-16">
           {/* Breadcrumb & Hero */}
-          <div className="space-y-4 max-w-3xl">
+          <div className="space-y-6 max-w-4xl">
             <div className="flex items-center space-x-2 text-xs text-[#737373]">
               <button onClick={() => navigateTo('/')} className="hover:text-black">home</button>
               <span>/</span>
-              <span className="text-black font-medium">plans & pricing</span>
+              <span className="text-black font-medium">plans</span>
             </div>
-            <h1 className="text-3xl sm:text-5xl font-medium tracking-tight text-black lowercase">
-              Plans & Engagement Models
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-medium tracking-tight text-black lowercase leading-[1.1]">
+              Choose the right way to work with Bang.
             </h1>
-            <p className="text-base text-[#525252] leading-relaxed">
-              Transparent milestone pricing, sprint packages, and turnkey hardware programs. Every engagement guarantees 100% client intellectual property ownership with rigorous ISO 13485 quality standards.
+            <p className="text-base sm:text-lg text-[#525252] leading-relaxed max-w-2xl">
+              Start with the support your product needs now, then build from there. Transparent milestone pricing, sprint packages, and turnkey hardware programs.
             </p>
+
+            <div className="pt-2 flex flex-wrap items-center gap-4">
+              <button
+                onClick={() => {
+                  const el = document.getElementById('section-compare-plans');
+                  el?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="px-6 py-3.5 bg-[#db2229] hover:bg-black text-white text-xs font-semibold tracking-tight transition-colors flex items-center space-x-2"
+              >
+                <span>compare plans</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+
+              <button
+                onClick={() => navigateTo('/start-for-free')}
+                className="px-6 py-3.5 bg-white hover:bg-black hover:text-white border border-black text-xs font-medium text-black transition-colors"
+              >
+                book a strategy call
+              </button>
+            </div>
           </div>
 
           {/* Core Commitments Strip */}
@@ -2217,6 +2481,157 @@ export const LiveWebsiteView: React.FC<LiveWebsiteViewProps> = ({
               <div className="space-y-1">
                 <div className="font-semibold text-xs text-black">Factory-Audited DFM Quality</div>
                 <p className="text-[11px] text-[#525252]">On-site contract manufacturing inspection and tooling sign-off ensuring zero post-production surprises.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* 4 ENGAGEMENT MODELS */}
+          <div id="section-compare-plans" className="space-y-6">
+            <div className="space-y-1">
+              <div className="text-xs text-[#737373]">// engagement models</div>
+              <h2 className="text-2xl sm:text-3xl font-medium text-black lowercase">
+                Four Ways to Engage
+              </h2>
+              <p className="text-xs text-[#525252]">
+                Choose the model that fits your stage, team capabilities, and product timeline.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {/* MODEL 1: Start a Project */}
+              <div className="p-6 border border-[#E5E5E5] bg-white flex flex-col justify-between space-y-6">
+                <div className="space-y-4">
+                  <div className="flex justify-between items-start">
+                    <span className="text-[10px] text-[#737373] uppercase tracking-wider">01. SPRINT</span>
+                    <span className="px-2 py-0.5 bg-[#FAFAFA] border border-[#E5E5E5] text-[10px] text-[#525252]">2 - 4 weeks</span>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-medium text-black lowercase">Start a Project</h3>
+                    <p className="text-xs text-[#525252] mt-1 leading-relaxed">
+                      Targeted engineering audits or rapid styling sprints designed to resolve specific technical bottlenecks quickly.
+                    </p>
+                  </div>
+                  <div className="pt-2 border-t border-[#E5E5E5] space-y-1.5 text-xs text-[#525252]">
+                    <div className="font-semibold text-black">deliverables:</div>
+                    <div>• CAD DFM tooling review</div>
+                    <div>• FEA stress & thermal modeling</div>
+                    <div>• Styling & CMF exploration</div>
+                    <div>• BOM cost optimization audit</div>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setFormData({ ...formData, supportNeed: 'Mechanical Engineering, FEA & DFM Tooling Audit' });
+                    navigateTo('/start-for-free');
+                  }}
+                  className="w-full py-2.5 border border-black text-xs font-medium text-black hover:bg-black hover:text-white transition-colors"
+                >
+                  start a project
+                </button>
+              </div>
+
+              {/* MODEL 2: Build a Product (FEATURED) */}
+              <div className="p-6 border-2 border-black bg-[#FAFAFA] flex flex-col justify-between space-y-6 relative">
+                <div className="space-y-4">
+                  <div className="flex justify-between items-start">
+                    <span className="text-[10px] text-black font-bold uppercase tracking-wider">02. TURNKEY</span>
+                    <span className="px-2 py-0.5 bg-black text-white text-[10px] font-medium">12 - 24 weeks</span>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-medium text-black lowercase">Build a Product</h3>
+                    <p className="text-xs text-[#525252] mt-1 leading-relaxed">
+                      Full-lifecycle hardware development from concept through prototype verification, hardened tooling, and factory mass manufacturing.
+                    </p>
+                  </div>
+                  <div className="pt-2 border-t border-[#E5E5E5] space-y-1.5 text-xs text-[#525252]">
+                    <div className="font-semibold text-black">deliverables:</div>
+                    <div>• Complete engineering & CAD</div>
+                    <div>• Validated physical prototypes</div>
+                    <div>• Hardened injection tooling CAD</div>
+                    <div>• Factory FAI & ISO 13485 sign-off</div>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setFormData({ ...formData, supportNeed: 'Turnkey Concept-to-Production Hardware Program' });
+                    navigateTo('/start-for-free');
+                  }}
+                  className="w-full py-2.5 bg-[#db2229] hover:bg-black text-white text-xs font-semibold tracking-tight transition-colors"
+                >
+                  build a product
+                </button>
+              </div>
+
+              {/* MODEL 3: Ongoing Support */}
+              <div className="p-6 border border-[#E5E5E5] bg-white flex flex-col justify-between space-y-6">
+                <div className="space-y-4">
+                  <div className="flex justify-between items-start">
+                    <span className="text-[10px] text-[#737373] uppercase tracking-wider">03. RETAINER</span>
+                    <span className="px-2 py-0.5 bg-[#FAFAFA] border border-[#E5E5E5] text-[10px] text-[#525252]">monthly / quarterly</span>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-medium text-black lowercase">Ongoing Support</h3>
+                    <p className="text-xs text-[#525252] mt-1 leading-relaxed">
+                      Embedded senior engineering, continuous factory liaison, and digital growth capacity scaling alongside your product lineup.
+                    </p>
+                  </div>
+                  <div className="pt-2 border-t border-[#E5E5E5] space-y-1.5 text-xs text-[#525252]">
+                    <div className="font-semibold text-black">deliverables:</div>
+                    <div>• Dedicated engineering pod</div>
+                    <div>• Priority 4-hour SLA response</div>
+                    <div>• ECO & tooling maintenance</div>
+                    <div>• 3D Web & growth support</div>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setFormData({ ...formData, supportNeed: 'Dedicated Engineering Retainer & Scaling Support' });
+                    navigateTo('/start-for-free');
+                  }}
+                  className="w-full py-2.5 border border-black text-xs font-medium text-black hover:bg-black hover:text-white transition-colors"
+                >
+                  get ongoing support
+                </button>
+              </div>
+
+              {/* MODEL 4: Venture Partnership */}
+              <div className="p-6 border border-[#E5E5E5] bg-white flex flex-col justify-between space-y-6">
+                <div className="space-y-4">
+                  <div className="flex justify-between items-start">
+                    <span className="text-[10px] text-[#737373] uppercase tracking-wider">04. CO-CREATION</span>
+                    <span className="px-2 py-0.5 bg-[#FAFAFA] border border-[#E5E5E5] text-[10px] text-[#525252]">selective</span>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-medium text-black lowercase">Venture Partnership</h3>
+                    <p className="text-xs text-[#525252] mt-1 leading-relaxed">
+                      Deep co-development partnership for breakthrough hardware ventures combining skin-in-the-game engineering and growth resources.
+                    </p>
+                  </div>
+                  <div className="pt-2 border-t border-[#E5E5E5] space-y-1.5 text-xs text-[#525252]">
+                    <div className="font-semibold text-black">deliverables:</div>
+                    <div>• Aligned milestone incentives</div>
+                    <div>• Strategic supply chain access</div>
+                    <div>• Co-developed IP framework</div>
+                    <div>• Go-to-market acceleration</div>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setFormData({ ...formData, supportNeed: 'Turnkey Concept-to-Production Hardware Program' });
+                    navigateTo('/start-for-free');
+                  }}
+                  className="w-full py-2.5 border border-black text-xs font-medium text-black hover:bg-black hover:text-white transition-colors"
+                >
+                  explore partnership
+                </button>
               </div>
             </div>
           </div>
@@ -2362,143 +2777,10 @@ export const LiveWebsiteView: React.FC<LiveWebsiteViewProps> = ({
                     });
                     navigateTo('/start-for-free');
                   }}
-                  className="px-5 py-2 bg-black text-white text-xs font-medium hover:bg-neutral-800 flex items-center space-x-1.5"
+                  className="px-5 py-2 bg-[#db2229] hover:bg-black text-white text-xs font-semibold flex items-center space-x-1.5 transition-colors"
                 >
                   <span>book strategy call for this scope</span>
                   <ArrowRight className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {/* THE 3 DETAILED ENGAGEMENT TIERS */}
-          <div className="space-y-6">
-            <div className="space-y-1">
-              <div className="text-xs text-[#737373]">// engagement tiers</div>
-              <h2 className="text-2xl font-medium text-black lowercase">
-                Three Transparent Working Models
-              </h2>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {/* TIER 1: Fixed-Scope Sprints */}
-              <div className="p-6 border border-[#E5E5E5] bg-white flex flex-col justify-between space-y-6">
-                <div className="space-y-4">
-                  <div className="flex justify-between items-start">
-                    <span className="text-[10px] text-[#737373] uppercase tracking-wider">01. SPRINT MODEL</span>
-                    <span className="px-2 py-0.5 bg-[#FAFAFA] border border-[#E5E5E5] text-[10px] text-[#525252]">2 - 4 weeks</span>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-medium text-black lowercase">Fixed-Scope Sprints & Audits</h3>
-                    <p className="text-xs text-[#525252] mt-1 leading-relaxed">
-                      Targeted engineering audits or rapid styling sprints designed to resolve specific technical bottlenecks quickly.
-                    </p>
-                  </div>
-                  <div className="pt-2 border-t border-[#E5E5E5] space-y-2 text-xs text-[#525252]">
-                    <div className="font-semibold text-black">ideal for:</div>
-                    <div>• CAD DFM tooling reviews before steel cutting</div>
-                    <div>• FEA stress & thermal dissipation analysis</div>
-                    <div>• Industrial design styling & CMF exploration</div>
-                    <div>• Bill of materials (BOM) cost reduction audits</div>
-                  </div>
-                  <div className="space-y-1.5 text-xs text-[#525252]">
-                    <div className="font-semibold text-black">deliverables:</div>
-                    <div>• Complete 3D CAD (.STEP / SolidWorks)</div>
-                    <div>• Detailed DFM Redline & Tooling Dossier</div>
-                    <div>• 24h partner turn-around on revisions</div>
-                  </div>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setFormData({ ...formData, supportNeed: 'Mechanical Engineering, FEA & DFM Tooling Audit' });
-                    navigateTo('/start-for-free');
-                  }}
-                  className="w-full py-2.5 border border-black text-xs font-medium text-black hover:bg-black hover:text-white transition-colors"
-                >
-                  discuss a sprint
-                </button>
-              </div>
-
-              {/* TIER 2: Turnkey Hardware Program (FEATURED) */}
-              <div className="p-6 border-2 border-black bg-[#FAFAFA] flex flex-col justify-between space-y-6 relative">
-                <div className="space-y-4">
-                  <div className="flex justify-between items-start">
-                    <span className="text-[10px] text-black font-bold uppercase tracking-wider">02. TURNKEY PROGRAM</span>
-                    <span className="px-2 py-0.5 bg-black text-white text-[10px] font-medium">3 - 9 months</span>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-medium text-black lowercase">Turnkey Concept-to-Production</h3>
-                    <p className="text-xs text-[#525252] mt-1 leading-relaxed">
-                      Full-lifecycle hardware development from industrial styling through prototype verification, hardened tooling, and factory mass manufacturing.
-                    </p>
-                  </div>
-                  <div className="pt-2 border-t border-[#E5E5E5] space-y-2 text-xs text-[#525252]">
-                    <div className="font-semibold text-black">ideal for:</div>
-                    <div>• Startups building their first flagship device</div>
-                    <div>• Corporations expanding their physical hardware lines</div>
-                    <div>• Regulated MedTech & industrial IoT devices</div>
-                    <div>• Products targeting &gt;$1M+ in mass manufacturing</div>
-                  </div>
-                  <div className="space-y-1.5 text-xs text-[#525252]">
-                    <div className="font-semibold text-black">deliverables:</div>
-                    <div>• Stage-gate validated physical prototypes</div>
-                    <div>• Production-ready injection & sheet metal tooling CAD</div>
-                    <div>• Contract Manufacturer selection & on-site FAI audits</div>
-                    <div>• Full regulatory compliance documentation (ISO 13485)</div>
-                  </div>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setFormData({ ...formData, supportNeed: 'Turnkey Concept-to-Production Hardware Program' });
-                    navigateTo('/start-for-free');
-                  }}
-                  className="w-full py-2.5 bg-black text-white text-xs font-medium hover:bg-neutral-800 transition-colors"
-                >
-                  book turnkey strategy session
-                </button>
-              </div>
-
-              {/* TIER 3: Dedicated Retainer */}
-              <div className="p-6 border border-[#E5E5E5] bg-white flex flex-col justify-between space-y-6">
-                <div className="space-y-4">
-                  <div className="flex justify-between items-start">
-                    <span className="text-[10px] text-[#737373] uppercase tracking-wider">03. RETAINER MODEL</span>
-                    <span className="px-2 py-0.5 bg-[#FAFAFA] border border-[#E5E5E5] text-[10px] text-[#525252]">ongoing / quarterly</span>
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-medium text-black lowercase">Dedicated Engineering & Growth</h3>
-                    <p className="text-xs text-[#525252] mt-1 leading-relaxed">
-                      Embedded senior engineering, continuous factory liaison, and digital growth capacity scaling alongside your product lineup.
-                    </p>
-                  </div>
-                  <div className="pt-2 border-t border-[#E5E5E5] space-y-2 text-xs text-[#525252]">
-                    <div className="font-semibold text-black">ideal for:</div>
-                    <div>• Multi-SKU product ecosystems requiring ongoing ECOs</div>
-                    <div>• Continuous factory quality control & tooling maintenance</div>
-                    <div>• 3D WebGL configurator updates and digital launches</div>
-                    <div>• Fractional Chief Product Officer / VP Engineering capacity</div>
-                  </div>
-                  <div className="space-y-1.5 text-xs text-[#525252]">
-                    <div className="font-semibold text-black">deliverables:</div>
-                    <div>• Guaranteed dedicated engineering hours per sprint</div>
-                    <div>• Priority 4-hour SLA response times</div>
-                    <div>• Direct Slack & weekly partner strategy reviews</div>
-                  </div>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    setFormData({ ...formData, supportNeed: 'Dedicated Engineering Retainer & Scaling Support' });
-                    navigateTo('/start-for-free');
-                  }}
-                  className="w-full py-2.5 border border-black text-xs font-medium text-black hover:bg-black hover:text-white transition-colors"
-                >
-                  inquire about retainer
                 </button>
               </div>
             </div>
@@ -2619,7 +2901,7 @@ export const LiveWebsiteView: React.FC<LiveWebsiteViewProps> = ({
             </div>
             <button
               onClick={() => navigateTo('/start-for-free')}
-              className="px-6 py-3 bg-white text-black hover:bg-neutral-200 text-xs font-semibold"
+              className="px-6 py-3.5 bg-[#db2229] text-white hover:bg-white hover:text-black text-xs font-semibold tracking-tight transition-colors"
             >
               book a strategy call
             </button>
@@ -2696,7 +2978,7 @@ export const LiveWebsiteView: React.FC<LiveWebsiteViewProps> = ({
       )}
 
       {/* CONDITIONAL SUB-PAGE: ABOUT BANG DESIGN */}
-      {currentRoute === '/about' && (
+      {(currentRoute === '/about' || currentRoute === '/about-bang' || currentRoute === '/company') && (
         <main className="flex-1 px-6 lg:px-12 py-16 max-w-7xl mx-auto space-y-16">
           <div className="space-y-4 max-w-3xl">
             <div className="flex items-center space-x-2 text-xs text-[#737373]">
@@ -2735,7 +3017,7 @@ export const LiveWebsiteView: React.FC<LiveWebsiteViewProps> = ({
       )}
 
       {/* CONDITIONAL SUB-PAGE: INSIGHTS & BLOG ARCHIVE */}
-      {currentRoute === '/insights' && (
+      {(currentRoute === '/insights' || currentRoute === '/insights-archive' || currentRoute === '/blog' || currentRoute.startsWith('/article/') || currentRoute.startsWith('/insights/')) && (
         <main className="flex-1 px-6 lg:px-12 py-16 max-w-7xl mx-auto space-y-12">
           <div className="space-y-4 max-w-3xl">
             <div className="flex items-center space-x-2 text-xs text-[#737373]">
@@ -2799,6 +3081,82 @@ export const LiveWebsiteView: React.FC<LiveWebsiteViewProps> = ({
                 <div className="text-[11px] text-[#737373]">{art.date}</div>
               </div>
             ))}
+          </div>
+        </main>
+      )}
+
+      {/* FALLBACK SUB-PAGE FOR UNKNOWN ROUTES */}
+      {!(
+        currentRoute === '/' ||
+        currentRoute === '' ||
+        currentRoute === '/home' ||
+        currentRoute === '/what-we-do' ||
+        currentRoute === '/product-design-to-manufacturing' ||
+        currentRoute === '/digital-growth' ||
+        currentRoute.startsWith('/product/') ||
+        currentRoute.startsWith('/digital/') ||
+        currentRoute === '/services' ||
+        currentRoute.startsWith('/industry/') ||
+        currentRoute === '/industries' ||
+        currentRoute === '/plans' ||
+        currentRoute === '/pricing' ||
+        currentRoute === '/engagement-models' ||
+        currentRoute === '/work' ||
+        currentRoute.startsWith('/work/') ||
+        currentRoute === '/case-studies' ||
+        currentRoute.startsWith('/case-study/') ||
+        currentRoute === '/start-for-free' ||
+        currentRoute === '/talk-to-bang' ||
+        currentRoute === '/contact' ||
+        currentRoute === '/book' ||
+        currentRoute === '/strategy-call' ||
+        currentRoute === '/book-a-strategy-call' ||
+        currentRoute === '/brief' ||
+        currentRoute === '/about' ||
+        currentRoute === '/about-bang' ||
+        currentRoute === '/company' ||
+        currentRoute === '/insights' ||
+        currentRoute === '/insights-archive' ||
+        currentRoute === '/blog' ||
+        currentRoute.startsWith('/article/') ||
+        currentRoute.startsWith('/insights/')
+      ) && (
+        <main className="flex-1 px-6 lg:px-12 py-16 max-w-7xl mx-auto space-y-8">
+          <div className="space-y-4 max-w-3xl">
+            <div className="text-xs text-[#737373] font-mono">// 404 • page not found</div>
+            <h1 className="text-3xl sm:text-5xl font-medium tracking-tight text-black lowercase">
+              Page Not Found
+            </h1>
+            <p className="text-base text-[#525252] leading-relaxed">
+              The requested page could not be located. Explore our primary navigation:
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 pt-4 border-t border-[#E5E5E5]">
+            <button onClick={() => navigateTo('/')} className="p-4 border border-[#E5E5E5] bg-white hover:border-black text-left text-xs font-medium text-black">
+              → Home
+            </button>
+            <button onClick={() => navigateTo('/what-we-do')} className="p-4 border border-[#E5E5E5] bg-white hover:border-black text-left text-xs font-medium text-black">
+              → What We Do
+            </button>
+            <button onClick={() => navigateTo('/industries')} className="p-4 border border-[#E5E5E5] bg-white hover:border-black text-left text-xs font-medium text-black">
+              → Industries
+            </button>
+            <button onClick={() => navigateTo('/work')} className="p-4 border border-[#E5E5E5] bg-white hover:border-black text-left text-xs font-medium text-black">
+              → Work
+            </button>
+            <button onClick={() => navigateTo('/plans')} className="p-4 border border-[#E5E5E5] bg-white hover:border-black text-left text-xs font-medium text-black">
+              → Plans
+            </button>
+            <button onClick={() => navigateTo('/about')} className="p-4 border border-[#E5E5E5] bg-white hover:border-black text-left text-xs font-medium text-black">
+              → About Bang
+            </button>
+            <button onClick={() => navigateTo('/start-for-free')} className="p-4 border border-[#E5E5E5] bg-white hover:border-black text-left text-xs font-medium text-black">
+              → Talk to Bang
+            </button>
+            <button onClick={() => navigateTo('/insights')} className="p-4 border border-[#E5E5E5] bg-white hover:border-black text-left text-xs font-medium text-black">
+              → Insights Archive
+            </button>
           </div>
         </main>
       )}

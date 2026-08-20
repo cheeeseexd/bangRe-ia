@@ -498,95 +498,223 @@ export const BANG_SPEC = {
   ] as IndustryItem[],
   caseStudies: [
     {
-      id: "sensi-flow",
-      title: "SensiFlow Point-of-Care Blood Analyzer",
-      category: "Medical and Scientific",
-      clientContext: "Series B Medical Technology Pioneer with breakthrough microfluidic sensor IP.",
-      challenge: "Transform a delicate laboratory benchtop test apparatus into a rugged, handheld, 4-minute diagnostic unit for frontline trauma nurses.",
-      bangRole: "Complete Turnkey: Industrial Design, Human Factors Analysis, ISO 13485 Engineering, Tooling Management.",
+      id: "mitra-robot",
+      title: "Mitra Service Robot",
+      category: "Industrial and Automation",
+      clientContext: "Commercial robotics venture deploying autonomous interaction systems in hospitals and retail.",
+      challenge: "Develop a robust, expressive commercial service robot chassis and head enclosure with integrated touch display, obstacle avoidance sensors, and stable human-height interaction.",
+      bangRole: "Industrial design, mechanical packaging, chassis engineering, thermal airflow routing, and tooling management for multi-part exterior shell.",
       process: [
-        "Human factors observation in 3 hospital emergency departments",
-        "Acoustic and thermal CFD modeling for compact fanless operation",
-        "Rapid SLA & CNC functional cartridge prototyping (45 iterations)",
-        "Class 10,000 cleanroom injection tooling qualification"
+        "Human factors observation in high-traffic hospital and retail environments",
+        "Differential drive base structural center-of-gravity stabilization",
+        "Multi-part fiberglass and molded shell packaging",
+        "Sensor bracket calibration for LiDAR and ultrasonic proximity arrays"
       ],
-      decisions: "Adopted a one-handed magnetic cartridge lock with tactile mechanical click, eliminating 70% of operator sample contamination errors.",
-      manufacturingLaunch: "Managed 8 hardened steel injection molds in Taiwan with 100% CMM inspection and optical tolerance verification.",
-      validatedOutcome: "Secured 510(k) FDA Clearance 4 months ahead of schedule; unit cost dropped 38% at 25,000 units/year.",
+      decisions: "Balanced child and adult sightlines while keeping the center of mass low over the motorized drive base.",
+      manufacturingLaunch: "Managed production-ready tooling, exterior mold specifications, and assembly jigs.",
+      validatedOutcome: "Commercial deployment across hospitals, airports, and retail venues with zero structural field failures.",
+      deliverables: ["Complete Mechanical CAD", "Shell Tooling Blueprints", "Thermal Duct Architecture", "Assembly Documentation"],
+      metrics: [
+        { label: "Deployment", value: "Commercial Fleets" },
+        { label: "Durability", value: "24/7 Operations" }
+      ]
+    },
+    {
+      id: "ari-tablet",
+      title: "Ari Education Tablet",
+      category: "Consumer Hardware and Appliances",
+      clientContext: "EdTech initiative developing ruggedized learning hardware for rural classroom deployments.",
+      challenge: "Design an ultra-durable, child-safe learning tablet capable of surviving repeated drops onto concrete, liquid spills, and harsh classroom handling.",
+      bangRole: "Industrial design, drop-resistant overmolding engineering, thermal passive dissipation, ergonomic grip detailing, and volume manufacturing DFM.",
+      process: [
+        "Classroom ergonomic trials with primary school students",
+        "Drop-impact FEA simulations for corner and face strikes",
+        "Dual-shot silicone bumper tooling verification",
+        "Sealed connector and speaker membrane integration"
+      ],
+      decisions: "Integrated a recessed display bezel with dual-shot silicone bumper geometry that absorbs 1.5-meter corner drops without screen fracture.",
+      manufacturingLaunch: "High-volume plastic injection mold sign-off and factory first article inspection.",
+      validatedOutcome: "Passed rigorous 1.5-meter drop tests and deployed across hundreds of educational centers.",
+      deliverables: ["3D Injection Tooling CAD", "Drop Test Verification Dossier", "Ergonomic Dimension Specs", "Production Master Samples"],
+      metrics: [
+        { label: "Drop Rating", value: "1.5m Concrete" },
+        { label: "Volume", value: "Mass Production" }
+      ]
+    },
+    {
+      id: "biofi-powertron",
+      title: "BioFi Powertron",
+      category: "Industrial and Automation",
+      clientContext: "Clean air engineering firm manufacturing high-throughput commercial and industrial air sanitizers.",
+      challenge: "Engineer a high-efficiency industrial power converter and active air purification module with heavy-duty electromagnetic shielding and passive heatsink channels for continuous 24/7 installations.",
+      bangRole: "Mechanical packaging, thermal heatsink extrusion design, sheet metal chassis DFM, CMF styling, and structural vibration isolation.",
+      process: [
+        "Thermal CFD airflow modeling for high-wattage power converters",
+        "Extruded aluminum heatsink chassis integration",
+        "Vibration isolation mounting for industrial fan assemblies",
+        "EMC containment and sheet metal stamping optimization"
+      ],
+      decisions: "Designed an extruded aluminum heatsink spine that doubles as the internal structural frame, cutting total part count and assembly complexity.",
+      manufacturingLaunch: "Managed extrusion die specifications, CNC machining tolerances, and powder coat finishing.",
+      validatedOutcome: "Continuous 24/7 industrial thermal stability with reduced manufacturing part count.",
+      deliverables: ["Extrusion Profile CAD", "Thermal Simulation Report", "Sheet Metal DFM Package", "Production Workflows"],
+      metrics: [
+        { label: "Thermal Stability", value: "24/7 Operation" },
+        { label: "Part Count", value: "Integrated Spine" }
+      ]
+    },
+    {
+      id: "elisar-ava",
+      title: "Elisar AVA Headset",
+      category: "Consumer Hardware and Appliances",
+      clientContext: "Next-generation neurotech and audio venture creating connected wearable devices.",
+      challenge: "Create a lightweight, ergonomically balanced audio and biometric sensing headset with uniform clamping pressure across diverse head shapes and hours of continuous comfortable wear.",
+      bangRole: "Human factors anthropometric studies, headband spring kinematics, acoustic ear-cup chamber engineering, overmolded sensor integration, and CMF.",
+      process: [
+        "Anthropometric head contour modeling across 200+ profiles",
+        "Multi-pivot gimbal hinge kinematic simulations",
+        "Acoustic chamber seal and resonance damping optimization",
+        "Breathable hypoallergenic cushion material selection"
+      ],
+      decisions: "Developed a multi-pivot gimbal hinge with internal wire routing that maintains consistent acoustic seal without hot-spot pressure on the temporal bone.",
+      manufacturingLaunch: "Precision multi-cavity injection molds and ultrasonic welding verification.",
+      validatedOutcome: "Comfort-certified acoustic seal with distributed cranial pressure.",
+      deliverables: ["Kinematic CAD Assemblies", "Acoustic Chamber Tooling", "CMF Master Color Plaque", "Sensor Packaging Specs"],
+      metrics: [
+        { label: "Ergonomics", value: "Universal Fit" },
+        { label: "Acoustics", value: "Isolated Chamber" }
+      ]
+    },
+    {
+      id: "embrace-warmer",
+      title: "Embrace Infant Warmer",
+      category: "Medical and Scientific Products",
+      clientContext: "Global healthcare pioneer creating affordable hypothermia prevention devices for vulnerable newborns.",
+      challenge: "Design an ultra-low-cost, phase-change neonatal thermal warming system capable of maintaining precise 37°C body temperature for premature infants in rural clinics without continuous electricity.",
+      bangRole: "Medical industrial design, human factors UX for non-literate community healthcare workers, thermal pouch enclosure engineering, biocompatible fabric sealing, and clinical usability.",
+      process: [
+        "Field observations in rural healthcare clinics",
+        "Phase-change material containment pouch sealing protocols",
+        "Intuitive iconographic temperature indicator interface design",
+        "Biocompatible, washable fabric sleeve architecture"
+      ],
+      decisions: "Designed intuitive temperature indicators, quick-release latches, and sanitizable medical-grade seams that withstand repeated hospital autoclaving.",
+      manufacturingLaunch: "Biocompatible sonic welding tooling and clinical trial pilot production.",
+      validatedOutcome: "Low-cost neonatal thermal regulation utilized globally in clinics lacking reliable power grids.",
+      deliverables: ["Medical Ergonomics CAD", "Sonic Weld Tooling Blueprints", "Clinical Human Factors Protocol", "Sterilization Specs"],
+      metrics: [
+        { label: "Clinical Target", value: "37°C Precision" },
+        { label: "Power Reliance", value: "Non-Electric Pouch" }
+      ]
+    },
+    {
+      id: "biofi-car-purifier",
+      title: "BioFi Car Purifier",
+      category: "Consumer Hardware and Appliances",
+      clientContext: "Automotive wellness startup developing compact in-cabin active air sanitation hardware.",
+      challenge: "Package high-voltage active ionization and HEPA filtration into an ultra-compact form factor that fits vehicle cup-holders while operating whisper-quietly.",
+      bangRole: "Industrial design, aerodynamic internal ducting, compact PCB packaging, CMF styling, and injection tooling DFM.",
+      process: [
+        "Aerodynamic intake and exhaust swirl chamber prototyping",
+        "Acoustic vibration dampening for high-RPM micro-fans",
+        "Cup-holder geometric constraint and tactile top-cap switch design",
+        "Automotive-grade UV and heat-resistant resin selection"
+      ],
+      decisions: "Created an upward-spiral laminar exhaust chimney that cycles vehicle cabin air 3x faster without direct draught on passengers.",
+      manufacturingLaunch: "High-cavitation tooling sign-off and automotive heat chamber testing.",
+      validatedOutcome: "Rapid in-cabin particulate clearance with ultra-compact desktop and automotive versatility.",
+      deliverables: ["Master Injection Tooling CAD", "Internal Airflow Simulations", "Tactile Switch Mechanics", "Packaging Design"],
+      metrics: [
+        { label: "Form Factor", value: "Cup-Holder Ready" },
+        { label: "Airflow", value: "Upward Spiral" }
+      ]
+    },
+    {
+      id: "sensi-flow",
+      title: "SensiFlow Blood Analyzer",
+      category: "Medical and Scientific Products",
+      clientContext: "Medical Technology Pioneer with breakthrough microfluidic sensor IP.",
+      challenge: "Transform a delicate laboratory benchtop test apparatus into a rugged, handheld, 4-minute diagnostic unit for frontline trauma nurses.",
+      bangRole: "Industrial design, human factors analysis, ISO 13485 engineering, tooling management.",
+      process: [
+        "Human factors observation in hospital emergency departments",
+        "Acoustic and thermal CFD modeling for fanless operation",
+        "Rapid SLA & CNC functional cartridge prototyping",
+        "Cleanroom injection tooling qualification"
+      ],
+      decisions: "Adopted a one-handed magnetic cartridge lock with tactile mechanical click, eliminating operator sample contamination errors.",
+      manufacturingLaunch: "Managed 8 hardened steel injection molds with 100% CMM inspection.",
+      validatedOutcome: "Secured FDA 510(k) clearance with reliable handheld diagnostic accuracy.",
       deliverables: ["Full Mechanical CAD Package", "Overmolded Enclosure Tooling", "Sterile Packaging UX", "Regulatory DHF Documentation"],
       metrics: [
-        { label: "Unit Cost Reduction", value: "-38%" },
-        { label: "FDA 510(k) Timeline", value: "4 Mo. Faster" },
-        { label: "Operator Error Rate", value: "< 0.02%" }
+        { label: "Design Control", value: "ISO 13485" },
+        { label: "Format", value: "Point-of-Care" }
       ]
     },
     {
       id: "apex-robotics",
-      title: "Apex Core Autonomous Warehouse AMR",
+      title: "Apex Core Autonomous AMR",
       category: "Industrial and Automation",
       clientContext: "Logistics Robotics OEM scaling from pilot deployments to multi-facility global fleets.",
       challenge: "Design a modular 1,000kg payload chassis with 360-degree LiDAR visibility that withstands 24/7 forklift impacts and industrial washdowns.",
-      bangRole: "Chassis Mechanical Engineering, Sheet Metal & Cast Aluminum DFM, Thermal Architecture, Status Light UI.",
+      bangRole: "Chassis mechanical engineering, sheet metal & cast aluminum DFM, thermal architecture, status light UI.",
       process: [
-        "Structural FEA shock load testing simulating 5g collision events",
+        "Structural FEA shock load testing simulating collision events",
         "Modular quick-swap battery docking mechanism design",
         "Low-center-of-gravity structural cast aluminum base plate",
         "High-visibility 360° perimeter status LED ring diffuser"
       ],
-      decisions: "Engineered single-piece hydroformed aluminum side skins that cut assembly fastener count by 62%.",
-      manufacturingLaunch: "Contract manufacturer ramp-up across 2 regional assembly facilities with custom test jigs.",
-      validatedOutcome: "Reduced fleet maintenance downtime by 55%; scaled production from 10 to 300 units per quarter.",
-      deliverables: ["SolidWorks Master Assembly", "FEA Structural Report", "Wiring Harness Routing Architecture", "Production Work Instructions"],
+      decisions: "Engineered single-piece hydroformed aluminum side skins that cut assembly fastener count significantly.",
+      manufacturingLaunch: "Contract manufacturer ramp-up across regional assembly facilities.",
+      validatedOutcome: "High fleet reliability with ruggedized industrial impact protection.",
+      deliverables: ["SolidWorks Master Assembly", "FEA Structural Report", "Wiring Harness Architecture", "Production Instructions"],
       metrics: [
-        { label: "Assembly Time", value: "-62%" },
-        { label: "Fleet Uptime", value: "99.8%" },
-        { label: "Impact Rating", value: "IK10 Certified" }
+        { label: "Rating", value: "IK10 Rugged" },
+        { label: "Payload", value: "1,000 kg" }
       ]
     },
     {
       id: "omni-brew",
-      title: "OmniBrew Precision Induction Coffee System",
-      category: "Consumer Hardware",
-      clientContext: "Direct-to-Consumer appliance startup backed by prominent specialty coffee roasters.",
-      challenge: "Combine medical-grade PID induction water heating with an ultra-quiet planetary grinder into a minimalist countertop form factor under $400 retail.",
-      bangRole: "Industrial Design, CMF (Anodized Aluminum & Walnut), Gearbox Engineering, Companion iOS/Android UX.",
+      title: "OmniBrew Precision Induction System",
+      category: "Consumer Hardware and Appliances",
+      clientContext: "Direct-to-Consumer appliance startup backed by specialty coffee roasters.",
+      challenge: "Combine precision induction water heating with an ultra-quiet planetary grinder into a minimalist countertop form factor.",
+      bangRole: "Industrial design, CMF (anodized aluminum & walnut), gearbox engineering, companion UX.",
       process: [
-        "120 thermodynamic induction coil dissipation cycles",
-        "Sound dampening chamber prototyping yielding < 58 dB grind",
+        "Thermodynamic induction coil dissipation cycles",
+        "Sound dampening chamber prototyping for low grind noise",
         "Interactive capacitive glass control panel prototyping",
         "Companion Bluetooth LE recipe orchestration app"
       ],
       decisions: "Embedded a hidden LED matrix beneath bead-blasted aluminum, creating an unblemished monolithic sculpture when powered off.",
-      manufacturingLaunch: "Audited tier-1 appliance CM in Shenzhen; verified automated ultrasonic weld lines.",
-      validatedOutcome: "Exceeded Kickstarter target by 840% ($2.4M raised); won Red Dot Best of the Best 2025.",
+      manufacturingLaunch: "Audited tier-1 appliance CM; verified automated ultrasonic weld lines.",
+      validatedOutcome: "High customer satisfaction and successful commercial retail rollout.",
       deliverables: ["Class-A Surfacing CAD", "Custom Gearbox Tooling", "iOS/Android Design System", "Retail Packaging"],
       metrics: [
-        { label: "Pre-order Sales", value: "$2.4M USD" },
-        { label: "Grind Noise", value: "54 dBA (Ultra-Quiet)" },
-        { label: "Red Dot Award", value: "Best of Best" }
+        { label: "Noise", value: "Quiet Planetary" },
+        { label: "Materials", value: "Class-A Aluminum" }
       ]
     },
     {
       id: "volt-node",
-      title: "VoltNode DC Fast-Charging Commercial Hub",
-      category: "Mobility and Infrastructure",
-      clientContext: "Clean-tech infrastructure venture deploying 350kW ultra-fast highway EV corridors.",
-      challenge: "Create a vandal-proof, all-weather charging dispenser with liquid-cooled cables and sunlight-readable 24-inch payment & ad interface.",
-      bangRole: "Enclosure Architecture, Liquid Cooling Cable Retraction UX, Outdoor Touchscreen Integration, Digital Growth Portal.",
+      title: "VoltNode Fast-Charging Commercial Hub",
+      category: "Mobility, Energy, and Infrastructure",
+      clientContext: "Clean-tech infrastructure venture deploying ultra-fast highway EV corridors.",
+      challenge: "Create a vandal-proof, all-weather charging dispenser with liquid-cooled cables and sunlight-readable payment interface.",
+      bangRole: "Enclosure architecture, liquid cooling cable retraction UX, outdoor touchscreen integration, digital growth portal.",
       process: [
         "NEMA 4X / IP66 environmental ingress and UV aging chamber tests",
         "Counterbalanced mechanical cable retraction system",
         "Modular sub-chassis enabling 10-minute field component swaps",
         "B2B fleet management dashboard & consumer mobile tap-to-charge flow"
       ],
-      decisions: "Replaced hydraulic assist with a maintenance-free gravity counterweight pulley system, slashing field maintenance calls by 80%.",
+      decisions: "Replaced hydraulic assist with a maintenance-free gravity counterweight pulley system.",
       manufacturingLaunch: "Local steel sheet fabrication & powder-coating supply chain with automated robotic laser welding.",
-      validatedOutcome: "Deployed 600+ stations across 4 countries; achieved 99.4% dispensing reliability.",
+      validatedOutcome: "Extensive highway station network deployment with reliable all-weather operation.",
       deliverables: ["Heavy Gauge Metal Fabrications", "Cable Management Kinematics", "Fleet UI System", "Installation Manuals"],
       metrics: [
-        { label: "Field Service Calls", value: "-80%" },
-        { label: "Power Throughput", value: "350 kW Dispense" },
-        { label: "Active Nodes", value: "600+ Installed" }
+        { label: "Enclosure", value: "NEMA 4X / IP66" },
+        { label: "Throughput", value: "High-Capacity" }
       ]
     }
   ] as CaseStudy[],
